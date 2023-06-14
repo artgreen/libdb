@@ -34,7 +34,7 @@ static const struct {
     filename_t fileName;        /**< File name for the table */
     int recordSize;             /**< Record size for records in this table */
 } databases[MAX_DB] = {
-        DB_ITEM, "items.bin", sizeof(item_t),
+    DB_ITEM, "items.bin", sizeof(item_t),
 };
 
 /**
@@ -74,7 +74,7 @@ bool dbCreate(byte_t dbNum) {
         retVal = false;
     } else {
         // write a zero for the first ID. Idea is to maybe add meta data to this DB later.
-        // yes, i know, this will current write garbage to the file
+        // yes, i know, this will currently write garbage to the file
         if(fwrite(&id, 1, databases[dbNum].recordSize, dbFile) != databases[dbNum].recordSize) {
             errno = EIO;
             retVal = false;
@@ -188,7 +188,7 @@ bool dbAdd(byte_t dbNum, byte_t *record, bool assignId) {
     }
     // Close the file
     fclose(dbFile);
-    bail: // bypass the fclose() above to preserve errno
+bail: // bypass the fclose() above to preserve errno
 #ifdef DEBUG
     logLine("dbAdd(): ending record\r\f");
     logHex(record, databases[dbNum].recordSize);
