@@ -140,10 +140,7 @@ bool dbGet(byte_t dbNum, id_t id, byte_t *record) {
 bool dbAdd(byte_t dbNum, byte_t *record, bool assignId) {
     FILE *dbFile;
     bool retVal = true;
-#ifdef DEBUG
-    logLine("dbAdd(): starting record\r\f");
-    logHex(record, databases[dbNum].recordSize);
-#endif
+
     if(assignId) {
         // append record to the file
         dbFile = dbOpen(dbNum, "ab");
@@ -189,9 +186,5 @@ bool dbAdd(byte_t dbNum, byte_t *record, bool assignId) {
     // Close the file
     fclose(dbFile);
 bail: // bypass the fclose() above to preserve errno
-#ifdef DEBUG
-    logLine("dbAdd(): ending record\r\f");
-    logHex(record, databases[dbNum].recordSize);
-#endif
     return retVal;
 }
