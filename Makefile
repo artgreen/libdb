@@ -14,7 +14,7 @@ CFLAGS := -I -P -D +O
 
 .PHONY: realclean clean all run
 
-all: testdb
+all: db.lib testdb
 run: testdb
 	cd $(TEST_DIR) && iix testdb
 
@@ -23,9 +23,14 @@ realclean: clean
 clean:
 	rm -f -- *.sym *.a *.b *.d *.e *.root *.lib testdb
 
-testdb: $(OBJS) | $(TEST_DATA_DIR)
-	iix link $(OBJS) KEEP=$@
+testdb: testdb.a db.lib | $(TEST_DATA_DIR)
+	iix link testdb.a db.lib KEEP=$@
 	mv $@ $(TEST_DIR)
+
+db.lib: libdb.a
+	rm -f db.lib
+	iix MakeLib db.lib +libdb.a
+
 testdb.a: testdb.c include/libdb.h
 libdb.a: libdb.c include/libdb.h
 $(TEST_DATA_DIR):
