@@ -28,8 +28,6 @@ testdb: $(OBJS) | $(TEST_DATA_DIR)
 	mv $@ $(TEST_DIR)
 testdb.a: testdb.c include/libdb.h
 libdb.a: libdb.c include/libdb.h
-loader: | $(LOAD_DIR)
-	+$(MAKE) -C loader loader
 $(TEST_DATA_DIR):
 	mkdir -p $@
 %.a:
