@@ -30,6 +30,7 @@ testdb: testdb.a db.lib | $(TEST_DATA_DIR)
 db.lib: libdb.a
 	rm -f db.lib
 	iix MakeLib db.lib +libdb.a
+	iix chtyp -t lib db.lib
 
 testdb.a: testdb.c include/libdb.h
 libdb.a: libdb.c include/libdb.h
